@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "include/fparser.h"
 #include "include/main.h"
 
 /////////////////////////////////////////////////////////
@@ -146,7 +147,10 @@ int main(int argc, char **argv)
 		}
 	}
 
-	// do stuff for parsing and runtime ...
+	for (iter = 0; iter < file_counter; iter++)
+	{
+		file_parser(files[iter]);
+	}
 
 	return 0;
 }
