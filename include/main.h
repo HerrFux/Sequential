@@ -4,7 +4,7 @@
 #ifndef VERBOSE_FLAG_INDEX
 #define VERBOSE_FLAG_INDEX 1
 #endif
-#ifndef VERSIOn_FLAG_INDEX
+#ifndef VERSION_FLAG_INDEX
 #define VERSION_FLAG_INDEX 2
 #endif
 
