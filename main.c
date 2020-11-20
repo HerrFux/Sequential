@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "include/fparser.h"
 #include "include/main.h"
@@ -15,6 +16,7 @@
 #endif
 
 // changable globals
+static char *arg;
 static char files[MAX_FILES][MAX_FILENAME_SIZE]; // script files
 static unsigned char file_counter = 0;			 // number of files given
 static char flags[] = {
@@ -30,11 +32,37 @@ static char flags[] = {
 
 void print_help()
 {
-	puts("Usage: ");
+	// get basename
+
+	size_t arg_length = strlen(arg);
+	size_t iter_arg = arg_length - 1;
+	size_t diff;
+	char *basename = malloc(arg_length);
+
+	// go back until slash is found
+
+	while (arg[iter_arg] != '/' && arg[iter_arg] != '\\')
+	{
+		iter_arg--;
+	}
+
+	iter_arg++; // skip slash char
+	diff = iter_arg;
+
+	// from there start copying
+
+	for (; iter_arg <= arg_length; iter_arg++)
+	{
+		basename[iter_arg - diff] = arg[iter_arg];
+	}
+
+	printf("Usage: %s [options]\n", basename);
 	puts("Options:");
 	puts("      --help        Display helping information");
 	puts("  -v, --verbose     Enable verbose output");
 	puts("      --version     Display the version of the program");
+
+	free(basename);
 }
 
 void print_version()
@@ -113,6 +141,9 @@ int main(int argc, char **argv)
 {
 	int iter = 0;
 
+	arg = malloc(strlen(argv[0]));
+	strcpy(arg, argv[0]);
+
 	if (argc == 1)
 	{
 		puts("No arguments were given.");
@@ -129,6 +160,8 @@ int main(int argc, char **argv)
 				return 0;
 		}
 	}
+
+	free(arg);
 
 	if (file_counter == 0)
 	{
