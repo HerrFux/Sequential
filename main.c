@@ -182,7 +182,7 @@ int main(int argc, char **argv)
 
 		for (iter = 0; iter < file_counter; iter++)
 		{
-			printf(" %i. %s", iter + 1, files[iter]);
+			printf(" %i. %s\n", iter + 1, files[iter]);
 		}
 	}
 
