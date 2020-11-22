@@ -161,7 +161,9 @@ int main(int argc, char **argv)
 			argument(argv[iter]);
 
 			if (flags[HELP_FLAG_INDEX] || flags[VERSION_FLAG_INDEX]) // quit due to terminating args
+			{
 				return 0;
+			}
 		}
 	}
 
