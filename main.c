@@ -3,23 +3,17 @@
 #include <string.h>
 #include "include/fparser.h"
 #include "include/main.h"
+#include "include/limits.h"
 
 /////////////////////////////////////////////////////////
 //  GLOBAL DEFINITIONS ONLY FOR THIS TRANSLATION UNIT  //
 /////////////////////////////////////////////////////////
 
-#ifndef MAX_FILENAME_SIZE
-#define MAX_FILENAME_SIZE 255
-#endif
-#ifndef MAX_FILES
-#define MAX_FILES 16
-#endif
-
 // changable globals
 static char *arg;
 static char files[MAX_FILES][MAX_FILENAME_SIZE]; // script files
 static unsigned char file_counter = 0;			 // number of files given
-static char flags[] = {
+static char flags[] = { // todo: move this to header file for verbose output/set a global for verbose output
 	// each argument has its own flag in order for other functions to know which argument was given
 	0, // help
 	0, // verbose
