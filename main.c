@@ -35,23 +35,27 @@ void print_help()
 	// get basename
 
 	size_t arg_length = strlen(arg);
-	size_t iter_arg = arg_length - 1;
+	size_t iter_arg = arg_length - 1; // skip null
 	size_t diff;
-	char *basename = malloc(arg_length);
+	char *basename = malloc(arg_length + 1);
 
 	// go back until slash is found
 
-	while (arg[iter_arg] != '/' && arg[iter_arg] != '\\')
+	while (arg[iter_arg] != '/' && arg[iter_arg] != '\\' && iter_arg != 0)
 	{
 		iter_arg--;
 	}
 
-	iter_arg++; // skip slash char
+	if (arg[iter_arg] == '/' || arg[iter_arg] == '\\') // if slash then skip
+	{
+		iter_arg++;
+	}
+
 	diff = iter_arg;
 
 	// from there start copying
 
-	for (; iter_arg <= arg_length; iter_arg++)
+	for (; iter_arg <= arg_length; iter_arg++) // include null
 	{
 		basename[iter_arg - diff] = arg[iter_arg];
 	}
