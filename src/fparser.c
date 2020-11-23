@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "include/fparser.h"
-#include "include/main.h"
-#include "include/limits.h"
+#include "fparser.h"
+#include "main.h"
+#include "limits.h"
 
 error validator(char *statement)
 {

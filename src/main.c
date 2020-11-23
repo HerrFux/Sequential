@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "include/fparser.h"
-#include "include/main.h"
-#include "include/limits.h"
+#include "fparser.h"
+#include "main.h"
+#include "limits.h"
 
 /////////////////////////////////////////////////////////
 //  GLOBAL DEFINITIONS ONLY FOR THIS TRANSLATION UNIT  //
