@@ -36,13 +36,13 @@ char file_parser(char *filename)
 		{
 			if (!statement[0]) // if first byte is null (string is empty)
 			{
-				printf("Empty statement at %i!\n", iter_address);
+				printf("[fp] Empty statement at %i!\n", iter_address);
 				return -1;
 			}
 
 			if (validator(statement)) // validate statement
 			{
-				printf("Illegal characters in statement at %i!\n", iter_address);
+				printf("[fp] Illegal characters in statement at %i!\n", iter_address);
 				printf("'-> \"%s\"\n", statement);
 				return -2;
 			}
@@ -55,14 +55,14 @@ char file_parser(char *filename)
 
 		if (iter_statement == MAX_CHAR_STATEMENT - 1) // if byte 255 is still not a newline, starting from 1 (0 -> 255 chars is 256 in total and should only be 255)
 		{
-			printf("Statement exceeded character limit at %i!\n", iter_address);
+			printf("[fp] Statement exceeded character limit at %i!\n", iter_address);
 			printf("'-> \"%s\"\n", statement);
 			return -3;
 		}
 
 		if (iter_address == MAX_STATEMENTS)
 		{
-			puts("Too many statements!");
+			puts("[fp] Too many statements!");
 			return -4;
 		}
 
