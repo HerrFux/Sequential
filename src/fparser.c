@@ -22,7 +22,7 @@ char file_parser(char *filename)
 
 	if (!file)
 	{
-		printf("\"%s\" could not be opened!\n", filename);
+		printf("[fp] \"%s\" could not be opened!\n", filename);
 		return -1;
 	}
 
