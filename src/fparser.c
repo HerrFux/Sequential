@@ -6,6 +6,7 @@
 
 char validator(char *statement)
 {
+	// todo: call divider for statement register
 	// todo: add to statement register if successful
 	memset(statement, 0, MAX_CHAR_ARGUMENT); // empty string
 	return 0;
@@ -22,7 +23,7 @@ char file_parser(char *filename)
 
 	if (!file)
 	{
-		printf("[fp] \"%s\" could not be opened!\n", filename);
+		printf("\"%s\" could not be opened!\n", filename);
 		return -1;
 	}
 
@@ -36,33 +37,43 @@ char file_parser(char *filename)
 		{
 			if (!statement[0]) // if first byte is null (string is empty)
 			{
-				printf("[fp] Empty statement at %i!\n", iter_address);
+				printf("Empty statement at %i!\n", iter_address);
 				return -1;
+			}
+
+			if (VERBOSE_ACTIVE) // print verbose output before validation
+			{
+				printf("Validating \"%s\" at %i ...\n", statement, iter_address);
 			}
 
 			if (validator(statement)) // validate statement
 			{
-				printf("[fp] Illegal characters in statement at %i!\n", iter_address);
+				printf("Illegal statement at %i!\n", iter_address);
 				printf("'-> \"%s\"\n", statement);
 				return -2;
 			}
 
 			iter_address++;
 			iter_statement = 0;
-			
+
+			if (byte == EOF) // if end of file stop loop
+			{
+				end_of_file = 1;
+			}
+
 			continue;
 		}
 
 		if (iter_statement == MAX_CHAR_STATEMENT - 1) // if byte 255 is still not a newline, starting from 1 (0 -> 255 chars is 256 in total and should only be 255)
 		{
-			printf("[fp] Statement exceeded character limit at %i!\n", iter_address);
+			printf("Statement exceeded character limit at %i!\n", iter_address);
 			printf("'-> \"%s\"\n", statement);
 			return -3;
 		}
 
 		if (iter_address == MAX_STATEMENTS)
 		{
-			puts("[fp] Too many statements!");
+			puts("Too many statements!");
 			return -4;
 		}
 
