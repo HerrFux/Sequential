@@ -1,6 +1,11 @@
+#include "limits.h"
 
-//todo: implement a statement register
-unsigned char statements[1][1];
+struct parsed_statement
+{
+	char command[4];
+	char arguments[MAX_ARGUMENTS][MAX_CHAR_ARGUMENT];
+};
+struct parsed_statement statement_register; // todo: implement statement register
 unsigned int statement_counter;
 
 char file_parser(char *filename);

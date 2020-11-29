@@ -8,4 +8,4 @@
 #define VERSION_FLAG_INDEX 2
 #endif
 
-typedef char error;
+char *flags_ptr;

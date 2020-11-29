@@ -12,5 +12,11 @@
 #define MAX_CHAR_STATEMENT 255 // including newline (written statement therefor consists of 254 readable chars and spaces)
 #endif
 #ifndef MAX_STATEMENTS
-#define MAX_STATEMENTS 4096 // todo: change limit and its associated data types
+#define MAX_STATEMENTS 0xffffffff // number of addresses (unsigned int)
+#endif
+#ifndef MAX_ARGUMENTS
+#define MAX_ARGUMENTS 8
+#endif
+#ifndef MAX_CHAR_ARGUMENT
+#define MAX_CHAR_ARGUMENT 8 // result of max address (MAX_STATEMENTS)
 #endif

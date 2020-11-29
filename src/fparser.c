@@ -1,20 +1,24 @@
 #include <stdio.h>
+#include <string.h>
 #include "fparser.h"
-#include "main.h"
 #include "limits.h"
+#include "main.h"
 
-error validator(char *statement)
+char validator(char *statement)
 {
+	// todo: add to statement register if successful
+	memset(statement, 0, MAX_CHAR_ARGUMENT); // empty string
 	return 0;
 }
 
-error file_parser(char *filename)
+char file_parser(char *filename)
 {
 	FILE *file = fopen(filename, "r");
 	char statement[MAX_CHAR_STATEMENT];
-	char byte = 0;
+	short byte = 0; // needs to be able to read 0xff bytes without confusion with EOF (-1 and 255 are both completely positive)
 	unsigned char iter_statement = 0;
-	unsigned int iter_address = 0; // todo: change data type to match limit
+	unsigned int iter_address = 0;
+	char end_of_file = 0;
 
 	if (!file)
 	{
@@ -22,41 +26,51 @@ error file_parser(char *filename)
 		return -1;
 	}
 
-	while ((byte = fgetc(file)) != EOF)
+	memset(statement, 0, MAX_CHAR_ARGUMENT); // empty string
+
+	while (!end_of_file)
 	{
-		if (byte == '\n') // if end of statement
+		byte = fgetc(file);
+
+		if (byte == '\n' || byte == EOF) // if end of statement or file
 		{
-			if (validator(statement)) // validate statement
+			if (!statement[0]) // if first byte is null (string is empty)
 			{
-				printf("Illegal characters in statement at %i!\n", iter_address);
-				printf("'-> %s\n", statement);
+				printf("Empty statement at %i!\n", iter_address);
 				return -1;
 			}
 
-			// todo: add to statement register if successful
+			if (validator(statement)) // validate statement
+			{
+				printf("Illegal characters in statement at %i!\n", iter_address);
+				printf("'-> \"%s\"\n", statement);
+				return -2;
+			}
 
 			iter_address++;
 			iter_statement = 0;
+			
+			continue;
 		}
 
-		if (iter_statement == MAX_CHAR_STATEMENT)
+		if (iter_statement == MAX_CHAR_STATEMENT - 1) // if byte 255 is still not a newline, starting from 1 (0 -> 255 chars is 256 in total and should only be 255)
 		{
 			printf("Statement exceeded character limit at %i!\n", iter_address);
-			printf("'-> %s\n", statement);
-			return -2;
+			printf("'-> \"%s\"\n", statement);
+			return -3;
 		}
 
 		if (iter_address == MAX_STATEMENTS)
 		{
 			puts("Too many statements!");
-			return -3;
+			return -4;
 		}
 
 		statement[iter_statement] = byte;
 		iter_statement++;
 	}
 
-	// todo: set max address/statement count
+	statement_counter = iter_address + 1; // add one because it started from 0
 
 	fclose(file);
 

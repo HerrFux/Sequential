@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "fparser.h"
-#include "main.h"
 #include "limits.h"
+#include "main.h"
 
 /////////////////////////////////////////////////////////
 //  GLOBAL DEFINITIONS ONLY FOR THIS TRANSLATION UNIT  //
@@ -13,7 +13,7 @@
 static char *arg;
 static char files[MAX_FILES][MAX_FILENAME_SIZE]; // script files
 static unsigned char file_counter = 0;			 // number of files given
-static char flags[] = { // todo: move this to header file for verbose output/set a global for verbose output
+static char flags[] = {
 	// each argument has its own flag in order for other functions to know which argument was given
 	0, // help
 	0, // verbose
@@ -78,6 +78,8 @@ void argument(char *arg)
 {
 	size_t arg_length = strlen(arg);
 	size_t iter_arg = 0;
+
+	flags_ptr = flags; // todo: maybe do a more elegant solution?
 
 	if (arg[0] == '-' && arg[1] == '-') // long arguments
 	{
